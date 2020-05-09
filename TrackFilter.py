@@ -49,6 +49,7 @@ class TrackFilter:
 
 
     """
+
     def __init__(self, seqs):
         """Constructor method
 
@@ -101,8 +102,7 @@ class TrackFilter:
                     else sequence[2],
                 ]
                 # only updating the sequence if it's remove & not in the sequence or add & in the sequence
-                if ((action == "remove") != (sequence[0] in new_seqs))
-                else sequence,
+                if ((action == "remove") != (sequence[0] in new_seqs)) else sequence,
                 self.df.itertuples(index=False),
             ),
             columns=["Sequence", "Status", "Reason"],
@@ -118,5 +118,7 @@ class TrackFilter:
         :return: None
         :rtype: None
         """
-        if csv_output: self.df.sort_values(["Status", "Reason"]).to_csv("Filter_Results.csv")
-        if text_output: print(self.df.groupby(["Status", "Reason"]).count())
+        if csv_output:
+            self.df.sort_values(["Status", "Reason"]).to_csv("Filter_Results.csv")
+        if text_output:
+            print(self.df.groupby(["Status", "Reason"]).count())
