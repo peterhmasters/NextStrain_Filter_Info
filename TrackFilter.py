@@ -31,8 +31,8 @@
 # Class method of print summary stats/df
 # output: arg in, print / to_csv / nothing conditional
 
-from Bio import SeqIO
 import pandas as pd
+
 
 class TrackFilter:
     def __init__(self, seqs):
@@ -42,8 +42,14 @@ class TrackFilter:
             columns=["Sequence", "Status", "Reason"],
         )
 
-
-seqs = list(SeqIO.to_dict(SeqIO.parse("sequences.fasta", "fasta")).keys())
-test = TrackFilter(seqs)
-print(test.seqs)
-print(test.df)
+    def update(self, type, reason, new_seqs):
+        self.seqs = new_seqs
+        self.df = pd.DataFrame(
+            map(
+                lambda sequence: [sequence[0], "exclusion" if type == "remove" else "inclusion", reason]
+                if sequence[0] not in self.seqs
+                else sequence,
+                self.df.itertuples(index=False),
+            ),
+            columns=["Sequence", "Status", "Reason"],
+        )
