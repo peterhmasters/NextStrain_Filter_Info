@@ -43,11 +43,21 @@ class TrackFilter:
         )
 
     def update(self, type, reason, new_seqs):
-        self.seqs = new_seqs
+        self.seqs = (
+            new_seqs
+            if type == "remove"
+            else self.seqs + list(filter(lambda seq: seq not in self.seqs, new_seqs))
+        )
         self.df = pd.DataFrame(
             map(
-                lambda sequence: [sequence[0], "exclusion" if type == "remove" else "inclusion", reason]
-                if sequence[0] not in self.seqs
+                lambda sequence: [
+                    sequence[0],
+                    "exclusion" if type == "remove" else "inclusion",
+                    reason
+                    if ((type == "remove") == (sequence[1] == "inclusion"))
+                    else sequence[2],
+                ]
+                if ((type == "remove") != (sequence[0] in new_seqs))
                 else sequence,
                 self.df.itertuples(index=False),
             ),
