@@ -1,6 +1,7 @@
-from Bio import SeqIO
-import pandas as pd
+# I'm working on the issue: https://github.com/nextstrain/augur/issues/424
+# I'm building a class locally to be able to update: https://github.com/nextstrain/augur/blob/master/augur/filter.py
 
+# Initial scratch work I did to understand the dataset
 # for record in SeqIO.parse("sequences.fasta", "fasta"):
 #     print(record.id)
 # # sequences and their metadata
@@ -15,6 +16,7 @@ import pandas as pd
 #
 # for seq_name in seq_keep: print(seq_name)
 
+# More scratchwork to set up my plan for this asignment
 # End goal is to get sequence: name, status: inclusion /exclusion,  reason : passed all/failed x/added back y
 # Plan is to create dataframe with every name, status (inclusion), reason (passed all)
 # Then after each filter update the dataframe accordingly
@@ -29,6 +31,8 @@ import pandas as pd
 # Class method of print summary stats/df
 # output: arg in, print / to_csv / nothing conditional
 
+from Bio import SeqIO
+import pandas as pd
 
 class TrackFilter:
     def __init__(self, seqs):
