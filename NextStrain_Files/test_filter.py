@@ -142,6 +142,8 @@ class TestFilter:
             ["exclusion", "changed my mind again"],
             ["exclusion", "too short"],
         ]
+        with self.assertRaises(TypeError):
+            test.update("filter", "changed my mind again", 42)
 
     def test_filter_info_output(self):
         seqs = ["PAN/CDC_259359_V1_V3/2015", "COL/FLR_00024/2015", "PRVABC59"]
